@@ -55,7 +55,7 @@ const Dashboard = () => {
   // );
 
   return (
-    <div>
+    <div className="">
       <Header />
       {/* <div className="mx-5 my-10">
         <div className="bg-primary w-[40%]">
@@ -80,7 +80,10 @@ const Dashboard = () => {
         <Card title="Total Orders" content={metrics.orders} />
       </div>
 
-      <div className="h-[500px] flex justify-center mx-5">
+      <div className="h-[500px] w-[80%] flex flex-col justify-center  items-center bg-primary mx-auto rounded-2xl">
+        <h2 className="text-light font-semibold text-xl uppercase mt-8">
+          Bar Chart of sales of Last 7 days
+        </h2>
         <BarChart data={weeklyData} />
       </div>
       <Footer />
