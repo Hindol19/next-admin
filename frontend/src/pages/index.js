@@ -8,6 +8,7 @@ import BarChart from "@/components/BarChart";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
+  const [weeklyData, setWeeklyData] = useState([]);
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -21,10 +22,22 @@ const Dashboard = () => {
       }
     };
 
+    const fetchWeeklyData = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/dashboard/weekly-sales"
+        );
+        setWeeklyData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch metrics:", error);
+      }
+    };
+
     fetchMetrics();
+    fetchWeeklyData();
   }, []);
 
-  console.log(metrics);
+  // console.log(weeklyData);
 
   // return (
   //   <div className="bg-light">
@@ -68,7 +81,7 @@ const Dashboard = () => {
       </div>
 
       <div className="h-[500px] flex justify-center mx-5">
-        <BarChart />
+        <BarChart data={weeklyData} />
       </div>
       <Footer />
     </div>

@@ -6,20 +6,39 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 });
 
 const BarChart = ({ mode, data }) => {
-  const series = [
-    {
-      name: "Net Profit",
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-    },
-    {
-      name: "Revenue",
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-    },
-    {
-      name: "Free Cash Flow",
-      data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
-    },
-  ];
+  // console.log(data[0]?.items);
+  const [bars, setBars] = useState([]);
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    const parseBars = () => {
+      let temp = [];
+      data[0]?.items.map((item) => {
+        temp.push({
+          name: item?.name,
+          data: data.map((ele) => {
+            let dat = [];
+            ele.items.map((it) => {
+              item?.name === it?.name && dat.push(it.quantity);
+            });
+            return dat[0];
+          }),
+        });
+
+        setBars(temp);
+      });
+    };
+
+    const parseDates = () => {
+      let temp = [];
+      data.map((item) => {
+        temp.push(item.date);
+      });
+      setDates(temp);
+    };
+    parseBars();
+    parseDates();
+  }, [data]);
 
   const options = {
     chart: {
@@ -42,21 +61,11 @@ const BarChart = ({ mode, data }) => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-      ],
+      categories: dates,
     },
     yaxis: {
       title: {
-        text: "$ (thousands)",
+        text: "Quantity Sold",
       },
     },
     fill: {
@@ -75,7 +84,7 @@ const BarChart = ({ mode, data }) => {
       <div id="chart" className="h-[90%] ">
         <ReactApexChart
           options={options}
-          series={series}
+          series={bars}
           type="bar"
           height={"100%"}
         />
