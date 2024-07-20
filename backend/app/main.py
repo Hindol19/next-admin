@@ -167,9 +167,12 @@ def index():
     return {"message": "Hello World"}
 
 
-@app.get("/get_data")
-def get_data():
-    return data
+@app.get("/dashboard/metrics")
+def metrics():
+    return {
+        "total_sales": 1500,
+        "orders": 60,
+    }
 
 
 if __name__ == "__main__":
