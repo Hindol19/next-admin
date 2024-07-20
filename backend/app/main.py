@@ -4,6 +4,20 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+]
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    # Adjust this to the specific origins you want to allow
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 data = {
     "sales": [
         {
@@ -156,3 +170,8 @@ def index():
 @app.get("/get_data")
 def get_data():
     return data
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

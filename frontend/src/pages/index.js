@@ -5,18 +5,17 @@ const inter = Inter({ subsets: ["latin"] });
 import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import axios from "axios";
+// import { fetchDataFromApi } from "@/components/utils/api";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
 
   useEffect(() => {
     const fetchMetrics = async () => {
-      const token = localStorage.getItem("token");
       try {
-        const response = await axios.get("http://localhost:8000/metrics", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get("http://127.0.0.1:8000/get_data");
         setMetrics(response.data);
+        // console.log(response);
       } catch (error) {
         console.error("Failed to fetch metrics:", error);
       }
@@ -25,18 +24,21 @@ const Dashboard = () => {
     fetchMetrics();
   }, []);
 
+  console.log(metrics.sales);
+
   return (
-    <Layout>
+    <div className="bg-light">
       <h1>Dashboard</h1>
-      <div>
-        {metrics.map((metric, index) => (
+      <div className="bg-light">
+        {metrics?.sales?.map((metric, index) => (
           <div key={index}>
-            <h2>{metric.name}</h2>
-            <p>{metric.value}</p>
+            Hii
+            {/* <h2>{metric}</h2> */}
+            {/* <p>{metric.value}</p> */}
           </div>
         ))}
       </div>
-    </Layout>
+    </div>
   );
 };
 
