@@ -7,16 +7,16 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:8000/test-cors")
-  //       .then((response) => {
-  //         console.log(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("CORS error:", error);
-  //       });
-  //   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8000/test-cors")
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("CORS error:", error);
+  //     });
+  // }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
