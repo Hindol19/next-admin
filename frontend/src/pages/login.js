@@ -25,26 +25,36 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-light text-dark">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+    <div className="flex flex-col items-center">
+      <h1 className="uppercase text-2xl text-light font-semibold my-10">
+        LOG IN
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-light rounded-xl w-[700px] p-10 flex flex-col items-center"
+      >
+        <div className="mb-10 flex flex-row justify-center">
+          <label className="mx-3">Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="mb-10 flex flex-row justify-center">
+          <label className="mx-3">Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="bg-primary text-xl font-bold px-8 py-2 rounded-md"
+        >
+          Login
+        </button>
       </form>
       {error && <p>{error}</p>}
     </div>
