@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -7,6 +7,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:8000/test-cors")
+  //       .then((response) => {
+  //         console.log(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("CORS error:", error);
+  //       });
+  //   }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -14,6 +25,7 @@ const LoginPage = () => {
         email,
         password,
       });
+      console.log(response);
       localStorage.setItem("token", response.data.token);
       router.push("/");
     } catch (error) {
