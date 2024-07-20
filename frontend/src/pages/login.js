@@ -16,8 +16,10 @@ export default function Login() {
         username,
         password,
       });
+      console.log(response.data);
       // Save token to localStorage or cookie
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.username);
       router.push("/");
     } catch (err) {
       setError("Invalid username or password");

@@ -87,10 +87,15 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class LoginResponse(BaseModel):
+    username: str
+    token: str
+
+
 @app.post("/login")
 async def login(request: LoginRequest):
     if request.username == "admin" and request.password == "password":
-        return {"token": "fake-token"}
+        return {"username": request.username, "token": "fake-token"}
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Invalid username or password",

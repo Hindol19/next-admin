@@ -10,12 +10,16 @@ import { useRouter } from "next/router";
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
+  const [username, setUsername] = useState("");
 
   const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const savedUserName = localStorage.getItem("username");
     if (!token) {
       router.push("/login");
+    } else {
+      setUsername(savedUserName);
     }
   }, []);
   useEffect(() => {
@@ -45,44 +49,9 @@ const Dashboard = () => {
     fetchWeeklyData();
   }, []);
 
-  // console.log(weeklyData);
-
-  // return (
-  //   <div className="bg-light">
-  //     <h1>Dashboard</h1>
-  //     <div className="bg-light">
-  //       {metrics?.sales?.map((metric, index) => (
-  //         <div key={index}>
-  //           Hii
-  //           {/* <h2>{metric}</h2> */}
-  //           {/* <p>{metric.value}</p> */}
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div className="">
-      <Header />
-      {/* <div className="mx-5 my-10">
-        <div className="bg-primary w-[40%]">
-          <h1 className="text-2xl text-center py-3">Total Sales </h1>
-          <div className="flex flex-row w-full justify-between px-8 py-4 border-b-2 font-bold first-line:border-opacity-40 border-dark bg-primaryDark">
-            <div className="">Date</div>
-            <div className="">Total Sales</div>
-          </div>
-          {metrics.map((item) => {
-            return (
-              <div className="flex flex-row w-full justify-between px-8 py-4 border-b-2 border-opacity-40 border-dark bg-primaryDark">
-                <div className="">{item.date}</div>
-                <div className="">{item.total_sales}</div>
-              </div>
-            );
-          })}
-        </div>
-        <div></div>
-      </div> */}
+      <Header username={username} />
       <div className="my-[80px] mx-5 flex flex-row justify-evenly">
         <Card title="Total Sales" content={metrics.total_sales} />
         <Card title="Total Orders" content={metrics.orders} />
