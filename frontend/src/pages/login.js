@@ -1,87 +1,52 @@
-import { useState, useEffect } from "react";
+// pages/login.js
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
+export default function Login() {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/test-cors")
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("CORS error:", error);
-  //     });
-  // }, []);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
-        email,
+      const response = await axios.post("http://localhost:8000/login", {
+        username,
         password,
       });
-      console.log(response);
+      // Save token to localStorage or cookie
       localStorage.setItem("token", response.data.token);
       router.push("/");
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (err) {
+      setError("Invalid username or password");
     }
   };
 
   return (
-    <div className=" w-full h-[100vh] flex items-center justify-center">
-      <div className="w-[60%] h-[80%] bg-light rounded-md ">
-        <form className="flex flex-col items-center" onSubmit={handleLogin}>
+    <div className="bg-light text-dark">
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
           <input
-            type="email"
-            className="my-3 w-[70%]"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            required
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
+        </div>
+        <div>
+          <label>Password:</label>
           <input
             type="password"
-            className="my-3 w-[70%]"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
           />
-          <button type="submit" className="bg-light">
-            Log In
-          </button>
-        </form>
-      </div>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      {error && <p>{error}</p>}
     </div>
-    // <div>
-    //   <h1>Login</h1>
-    //   <form onSubmit={handleLogin}>
-    //     <input
-    //       type="email"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //       placeholder="Email"
-    //       required
-    //     />
-    //     <input
-    //       type="password"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //       placeholder="Password"
-    //       required
-    //     />
-    //     <button type="submit" className="bg-light">
-    //       Login
-    //     </button>
-    //   </form>
-    // </div>
   );
-};
-
-export default LoginPage;
+}

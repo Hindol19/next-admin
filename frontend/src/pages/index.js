@@ -4,12 +4,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "@/components/Card";
 import BarChart from "@/components/BarChart";
+import { useRouter } from "next/router";
 // import { fetchDataFromApi } from "@/components/utils/api";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
 
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
