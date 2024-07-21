@@ -12,7 +12,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/login", {
+      const response = await axios.post("http://localhost:8000/auth/login", {
         username,
         password,
       });
@@ -27,7 +27,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[100vh]">
+    <div className=" bg-dark flex flex-col items-center justify-center h-[100vh]">
       <h1 className="uppercase text-4xl text-light font-semibold my-10 md:text-2xl">
         WELCOME TO ARGON
       </h1>
@@ -62,7 +62,7 @@ export default function Login() {
           Login
         </button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="text-light">{error}</p>}
     </div>
   );
 }

@@ -58,7 +58,7 @@ const Dashboard = () => {
   // Call the function to get the current date
   const currentDate = getCurrentDate();
   return (
-    <div className="dark:bg-dark bglight">
+    <div className="dark:bg-dark bg-light">
       <Header username={username} />
       <div className="flex flex-row justify-between">
         <h2 className="dark:text-light text-dark text-2xl mx-12 mt-10 font-bold tracking-wider sm:!text-lg">

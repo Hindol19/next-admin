@@ -10,7 +10,7 @@ import Brightness2Icon from "@mui/icons-material/Brightness2";
 const NavMenu = ({ username, mode, setMode }) => {
   return (
     <div className="min-w-[70vw] flex flex-col justify-evenly z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/90 dark:bg-light/60 rounded-lg backdrop-blur-md py-32">
-      <div className=" h-full flex items-center text-2xl dark:text-dark border-b-2 dark:border-dark border-opacity-40 mb-10">
+      <div className=" h-full flex items-center text-2xl dark:text-dark text-light border-b-2 dark:border-dark border-opacity-40 mb-10">
         Welcome
         <span className="font-bold ml-2  flex items-center">{username}</span>
       </div>
@@ -69,12 +69,12 @@ const Header = ({ username, isMobile }) => {
         </div>
       </nav>
       {/* // FOR MOBILE */}
-      <nav className="md:flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 border-light hidden ">
-        <div className="text-light font-bold text-xl sm:text-lg flex items-center">
+      <nav className="md:flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 dark:border-light border-dark hidden ">
+        <div className="dark:text-light text-dark font-bold text-xl sm:text-lg flex items-center">
           <AlignVerticalBottomIcon className="mr-5" />
           ARGON
         </div>
-        <div className="text-light flex flex-row h-full items-center">
+        <div className="dark:text-light text-dark flex flex-row h-full items-center">
           {isNavOpen ? (
             <CloseIcon onClick={toggleMenu} />
           ) : (
