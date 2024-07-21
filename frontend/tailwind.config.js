@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         // dark: "#1b1b1b",
         dark: "#060608",
-        // light: "#f5f5f5",
+        acc: "#ff7b97",
         light: "#f8efff",
         primary: "#352d57", // 240,86,199
         primaryDark: "#191221", // 80,230,217

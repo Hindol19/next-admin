@@ -34,7 +34,7 @@ const NavMenu = ({ username, mode, setMode, logOut }) => {
     </div>
   );
 };
-const Header = ({ username, isMobile }) => {
+const Header = ({ username, bar = true, setBar }) => {
   const [mode, setMode] = useThemeSwitcher();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -48,6 +48,14 @@ const Header = ({ username, isMobile }) => {
     localStorage.clear();
     // console.log(localStorage);
     router.push("/login");
+  };
+
+  const toggleBar = () => {
+    if (!bar) setBar(true);
+  };
+
+  const togglePi = () => {
+    if (bar) setBar(false);
   };
   return (
     <>
@@ -63,9 +71,26 @@ const Header = ({ username, isMobile }) => {
               {username}
             </span>
           </div>
-          <div className="ml-8">DASHBOARD</div>
-          <div className="ml-8">PIE CHART</div>
-          <div className="ml-8 cursor-pointer" onClick={logOut}>
+          <div
+            className={`ml-8 px-2 py-1 rounded-md cursor-pointer ${
+              bar && "  dark:text-acc"
+            }`}
+            onClick={toggleBar}
+          >
+            BAR CHART
+          </div>
+          <div
+            className={`ml-8 px-2 py-1 rounded-md cursor-pointer ${
+              !bar && "  dark:text-acc"
+            }`}
+            onClick={togglePi}
+          >
+            PIE CHART
+          </div>
+          <div
+            className="ml-8 px-2 py-1 rounded-md cursor-pointer"
+            onClick={logOut}
+          >
             LOG OUT
           </div>
           <button

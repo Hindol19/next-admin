@@ -4,14 +4,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "@/components/Card";
 import BarChart from "@/components/BarChart";
+import PiChart from "@/components/PiChart";
 import { useRouter } from "next/router";
 import useThemeSwitcher from "@/components/hooks/useThemeSwitcher";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
   const [username, setUsername] = useState("");
-  const [mode, setMode] = useThemeSwitcher();
+  const [bar, setBar] = useState(true);
 
   const router = useRouter();
 
@@ -42,6 +44,22 @@ const Dashboard = () => {
       }
     };
 
+    const fetchTopProducts = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/dashboard/top-products",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setTopProducts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch metrics:", error);
+      }
+    };
+
     const fetchWeeklyData = async () => {
       try {
         const response = await axios.get(
@@ -60,6 +78,7 @@ const Dashboard = () => {
 
     fetchMetrics();
     fetchWeeklyData();
+    fetchTopProducts();
   }, []);
 
   const getCurrentDate = () => {
@@ -71,7 +90,7 @@ const Dashboard = () => {
   const currentDate = getCurrentDate();
   return (
     <div className="dark:bg-dark bg-light">
-      <Header username={username} />
+      <Header username={username} bar={bar} setBar={setBar} />
       <div className="flex flex-row justify-between">
         <h2 className="dark:text-light text-dark text-2xl mx-12 mt-10 font-bold tracking-wider sm:!text-lg">
           DASHBOARD
@@ -86,11 +105,17 @@ const Dashboard = () => {
           <Card title="Total Orders" content={metrics.orders} />
         </div>
 
-        <div className="h-[500px] w-[75%] md:w-full  flex flex-col justify-center  items-center bg-primaryDark dark:bg-primary bg-opacity-60 dark:bg-opacity-100  rounded-md ml-5 md:ml-0">
+        <div className="h-[500px] w-[75%] md:w-full  flex flex-col   items-center bg-primaryDark dark:bg-primary bg-opacity-60 dark:bg-opacity-100  rounded-md ml-5 md:ml-0">
           <h2 className="text-light font-semibold text-xl sm:text-sm uppercase sm:capitalize mt-8">
-            Bar Chart of sales of Last 7 days
+            {bar
+              ? "Bar Chart of sales of Last 7 days"
+              : "Pi Chart of sales of top 5 products"}
           </h2>
-          <BarChart data={weeklyData} />
+          {bar ? (
+            <BarChart data={weeklyData} />
+          ) : (
+            <PiChart data={topProducts} />
+          )}
         </div>
       </div>
       <Footer />

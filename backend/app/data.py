@@ -1,3 +1,26 @@
+top_products = [
+    {
+        "name": "Laptop",
+        "quantity": 12
+    },
+    {
+        "name": "Monitor",
+        "quantity": 5
+    },
+    {
+        "name": "CPU",
+        "quantity": 8
+    },
+    {
+        "name": "GPU",
+        "quantity": 20
+    },
+    {
+        "name": "Keyboard",
+        "quantity": 32,
+    }
+]
+
 weekly_data = [
     {
         "date": "2024-07-13",

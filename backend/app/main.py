@@ -1,4 +1,4 @@
-from .data import weekly_data, fakeUserDb
+from .data import weekly_data, fakeUserDb, top_products
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
@@ -82,6 +82,11 @@ def metrics(user: dict = Depends(get_current_user)):
 @app.get("/dashboard/weekly-sales")
 def weekly(user: dict = Depends(get_current_user)):
     return weekly_data
+
+
+@app.get("/dashboard/top-products")
+def top_prod(user: dict = Depends(get_current_user)):
+    return top_products
 
 
 if __name__ == "__main__":
