@@ -5,7 +5,7 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-const BarChart = ({ mode, data }) => {
+const BarChart = ({ mode = "dark", data }) => {
   // console.log(data[0]?.items);
   const [bars, setBars] = useState([]);
   const [dates, setDates] = useState([]);
@@ -40,8 +40,11 @@ const BarChart = ({ mode, data }) => {
     parseDates();
   }, [data]);
 
+  const col = mode === "dark" ? "#f8efff" : "#060608";
+
   const options = {
     chart: {
+      foreColor: col,
       type: "bar",
       height: 350,
     },
@@ -80,7 +83,7 @@ const BarChart = ({ mode, data }) => {
     },
   };
   return (
-    <div className="h-full w-[80%] mt-4 w">
+    <div className="h-full w-[95%] mt-4 w">
       <div id="chart" className="h-[90%] ">
         <ReactApexChart
           options={options}

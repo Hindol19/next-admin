@@ -111,7 +111,7 @@ def index():
 @app.get("/dashboard/metrics")
 def metrics():
     return {
-        "total_sales": 1500,
+        "total_sales": 35000,
         "orders": 60,
     }
 
