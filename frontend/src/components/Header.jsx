@@ -7,7 +7,15 @@ import useThemeSwitcher from "./hooks/useThemeSwitcher";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness2Icon from "@mui/icons-material/Brightness2";
 import { useRouter } from "next/router";
-const NavMenu = ({ username, mode, setMode, logOut }) => {
+const NavMenu = ({
+  username,
+  mode,
+  setMode,
+  logOut,
+  toggleBar,
+  togglePi,
+  bar,
+}) => {
   return (
     <div className="min-w-[70vw] flex flex-col justify-evenly z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/90 dark:bg-light/60 rounded-lg backdrop-blur-md py-32">
       <div className=" h-full flex items-center text-2xl dark:text-dark text-light border-b-2 dark:border-dark border-opacity-40 mb-10">
@@ -15,8 +23,18 @@ const NavMenu = ({ username, mode, setMode, logOut }) => {
         <span className="font-bold ml-2  flex items-center">{username}</span>
       </div>
       <div className="dark:text-dark text-light flex flex-col justify-center items-center text-md font-semibold">
-        <div className="mt-3">DASHBOARD</div>
-        <div className="mt-3">PIE CHART</div>
+        <div
+          className={`mt-3 cursor-pointer ${bar && "  text-acc"}`}
+          onClick={toggleBar}
+        >
+          DASHBOARD
+        </div>
+        <div
+          className={`mt-3 cursor-pointer ${!bar && "  text-acc"}`}
+          onClick={togglePi}
+        >
+          PIE CHART
+        </div>
         <div className="mt-3 cursor-pointer" onClick={logOut}>
           LOG OUT
         </div>
@@ -73,7 +91,7 @@ const Header = ({ username, bar = true, setBar }) => {
           </div>
           <div
             className={`ml-8 px-2 py-1 rounded-md cursor-pointer ${
-              bar && "  dark:text-acc"
+              bar && "  text-acc"
             }`}
             onClick={toggleBar}
           >
@@ -81,7 +99,7 @@ const Header = ({ username, bar = true, setBar }) => {
           </div>
           <div
             className={`ml-8 px-2 py-1 rounded-md cursor-pointer ${
-              !bar && "  dark:text-acc"
+              !bar && "  text-acc"
             }`}
             onClick={togglePi}
           >
@@ -123,6 +141,9 @@ const Header = ({ username, bar = true, setBar }) => {
               mode={mode}
               setMode={setMode}
               logOut={logOut}
+              toggleBar={toggleBar}
+              togglePi={togglePi}
+              bar={bar}
             />
           )}
         </div>

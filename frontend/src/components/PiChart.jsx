@@ -5,7 +5,30 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 });
 
 const PiChart = ({ mode = "dark", data }) => {
-  const series = [44, 55, 13, 43, 22];
+  const [series, setSeries] = useState([]);
+  const [labels, setLabels] = useState([]);
+
+  useEffect(() => {
+    const parseBars = () => {
+      let temp = [];
+      data.map((item) => {
+        temp.push(item.quantity);
+
+        setSeries(temp);
+      });
+    };
+
+    const parseLabels = () => {
+      let temp = [];
+      data.map((item) => {
+        temp.push(item.name);
+
+        setLabels(temp);
+      });
+    };
+    parseBars();
+    parseLabels();
+  }, [data]);
 
   const col = mode === "dark" ? "#f8efff" : "#060608";
   const options = {
@@ -14,7 +37,7 @@ const PiChart = ({ mode = "dark", data }) => {
       width: 380,
       type: "pie",
     },
-    labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+    labels: labels,
     responsive: [
       {
         breakpoint: 480,
@@ -30,9 +53,8 @@ const PiChart = ({ mode = "dark", data }) => {
     ],
   };
 
-  console.log(data);
   return (
-    <div className="mt-4 w-[50%]">
+    <div className="mt-4 w-[50%] md:w-[80%] md:mt-10 sm:!w-[99%]">
       <div id="chart">
         <ReactApexChart
           options={options}
