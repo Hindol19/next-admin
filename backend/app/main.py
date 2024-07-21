@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 
 
@@ -92,9 +93,40 @@ class LoginResponse(BaseModel):
     token: str
 
 
-@app.post("/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+def fake_decode_token(token):
+    if token == "fake-token":
+        return {"username": "user123"}
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid authentication credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    return fake_decode_token(token)
+
+fakeUserDb = [
+    {
+        "username": "user123",
+        "password": "password"
+    }
+]
+
+
+def checkUser(username, password):
+    for user in fakeUserDb:
+        if user["username"] == username and user["password"] == password:
+            return True
+    return False
+
+
+@app.post("/auth/login")
 async def login(request: LoginRequest):
-    if request.username == "admin" and request.password == "password":
+    if checkUser(request.username, request.password):
         return {"username": request.username, "token": "fake-token"}
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -109,7 +141,7 @@ def index():
 
 
 @app.get("/dashboard/metrics")
-def metrics():
+def metrics(user: dict = Depends(get_current_user)):
     return {
         "total_sales": 35000,
         "orders": 60,
@@ -117,7 +149,7 @@ def metrics():
 
 
 @app.get("/dashboard/weekly-sales")
-def weekly():
+def weekly(user: dict = Depends(get_current_user)):
     return weekly_data
 
 

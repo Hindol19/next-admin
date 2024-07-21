@@ -11,11 +11,12 @@ const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
   const [username, setUsername] = useState("");
-
+  // const [token, setToken] = useState("");
   const router = useRouter();
   useEffect(() => {
     // localStorage.clear();
     const token = localStorage.getItem("token");
+    // setToken(localStorage.getItem("token"));
     const savedUserName = localStorage.getItem("username");
     if (!token) {
       router.push("/login");
@@ -24,10 +25,16 @@ const Dashboard = () => {
     }
   }, []);
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const fetchMetrics = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/dashboard/metrics"
+          "http://127.0.0.1:8000/dashboard/metrics",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setMetrics(response.data);
       } catch (error) {
@@ -38,7 +45,12 @@ const Dashboard = () => {
     const fetchWeeklyData = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/dashboard/weekly-sales"
+          "http://127.0.0.1:8000/dashboard/weekly-sales",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setWeeklyData(response.data);
       } catch (error) {
