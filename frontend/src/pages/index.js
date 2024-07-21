@@ -5,27 +5,27 @@ import axios from "axios";
 import Card from "@/components/Card";
 import BarChart from "@/components/BarChart";
 import { useRouter } from "next/router";
-// import { fetchDataFromApi } from "@/components/utils/api";
+import useThemeSwitcher from "@/components/hooks/useThemeSwitcher";
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
   const [username, setUsername] = useState("");
-  // const [token, setToken] = useState("");
+  const [mode, setMode] = useThemeSwitcher();
+
   const router = useRouter();
+
   useEffect(() => {
-    // localStorage.clear();
     const token = localStorage.getItem("token");
-    // setToken(localStorage.getItem("token"));
+
     const savedUserName = localStorage.getItem("username");
     if (!token) {
       router.push("/login");
     } else {
       setUsername(savedUserName);
+      // setMode("dark");
     }
-  }, []);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+
     const fetchMetrics = async () => {
       try {
         const response = await axios.get(

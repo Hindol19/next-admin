@@ -6,8 +6,8 @@ import { useState } from "react";
 import useThemeSwitcher from "./hooks/useThemeSwitcher";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness2Icon from "@mui/icons-material/Brightness2";
-
-const NavMenu = ({ username, mode, setMode }) => {
+import { useRouter } from "next/router";
+const NavMenu = ({ username, mode, setMode, logOut }) => {
   return (
     <div className="min-w-[70vw] flex flex-col justify-evenly z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/90 dark:bg-light/60 rounded-lg backdrop-blur-md py-32">
       <div className=" h-full flex items-center text-2xl dark:text-dark text-light border-b-2 dark:border-dark border-opacity-40 mb-10">
@@ -17,6 +17,9 @@ const NavMenu = ({ username, mode, setMode }) => {
       <div className="dark:text-dark text-light flex flex-col justify-center items-center text-md font-semibold">
         <div className="mt-3">DASHBOARD</div>
         <div className="mt-3">PIE CHART</div>
+        <div className="mt-3 cursor-pointer" onClick={logOut}>
+          LOG OUT
+        </div>
         <button
           onClick={() => setMode(mode === "light" ? "dark" : "light")}
           className={` flex items-center justify-center rounded-full p-1 mt-3`}
@@ -40,6 +43,12 @@ const Header = ({ username, isMobile }) => {
     else setIsNavOpen(true);
   };
 
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.clear();
+    // console.log(localStorage);
+    router.push("/login");
+  };
   return (
     <>
       <nav className="flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 dark:border-light border-dark md:hidden">
@@ -56,6 +65,9 @@ const Header = ({ username, isMobile }) => {
           </div>
           <div className="ml-8">DASHBOARD</div>
           <div className="ml-8">PIE CHART</div>
+          <div className="ml-8 cursor-pointer" onClick={logOut}>
+            LOG OUT
+          </div>
           <button
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
             className={`ml-3 flex items-center justify-center rounded-full p-1`}
@@ -81,7 +93,12 @@ const Header = ({ username, isMobile }) => {
             <MenuIcon onClick={toggleMenu} />
           )}
           {isNavOpen && (
-            <NavMenu username={username} mode={mode} setMode={setMode} />
+            <NavMenu
+              username={username}
+              mode={mode}
+              setMode={setMode}
+              logOut={logOut}
+            />
           )}
         </div>
       </nav>
