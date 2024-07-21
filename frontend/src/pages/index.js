@@ -58,13 +58,13 @@ const Dashboard = () => {
   // Call the function to get the current date
   const currentDate = getCurrentDate();
   return (
-    <div className="">
+    <div className="dark:bg-dark bglight">
       <Header username={username} />
       <div className="flex flex-row justify-between">
-        <h2 className="text-light text-2xl mx-12 mt-10 font-bold tracking-wider sm:!text-lg">
+        <h2 className="dark:text-light text-dark text-2xl mx-12 mt-10 font-bold tracking-wider sm:!text-lg">
           DASHBOARD
         </h2>
-        <h2 className="text-light text-4xl mx-12 mt-10 tracking-wider sm:!text-xl">
+        <h2 className="dark:text-light text-dark text-4xl mx-12 mt-10 tracking-wider sm:!text-xl">
           {currentDate}
         </h2>
       </div>
@@ -74,7 +74,7 @@ const Dashboard = () => {
           <Card title="Total Orders" content={metrics.orders} />
         </div>
 
-        <div className="h-[500px] w-[75%] md:w-full  flex flex-col justify-center  items-center bg-primary  rounded-md ml-5 md:ml-0">
+        <div className="h-[500px] w-[75%] md:w-full  flex flex-col justify-center  items-center bg-primaryDark dark:bg-primary bg-opacity-60 dark:bg-opacity-100  rounded-md ml-5 md:ml-0">
           <h2 className="text-light font-semibold text-xl sm:text-sm uppercase sm:capitalize mt-8">
             Bar Chart of sales of Last 7 days
           </h2>
