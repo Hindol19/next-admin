@@ -61,21 +61,21 @@ const Dashboard = () => {
     <div className="">
       <Header username={username} />
       <div className="flex flex-row justify-between">
-        <h2 className="text-light text-2xl mx-12 mt-10 font-bold tracking-wider">
+        <h2 className="text-light text-2xl mx-12 mt-10 font-bold tracking-wider sm:!text-lg">
           DASHBOARD
         </h2>
-        <h2 className="text-light text-4xl mx-12 mt-10 tracking-wider">
+        <h2 className="text-light text-4xl mx-12 mt-10 tracking-wider sm:!text-xl">
           {currentDate}
         </h2>
       </div>
-      <div className="flex flex-row items-center justify-between mx-12">
-        <div className="my-[40px] flex flex-col justify-between h-[500px]">
+      <div className="flex flex-row md:flex-col items-center justify-between mx-12 ">
+        <div className="my-[40px] flex flex-col md:flex-row justify-between md:items-center md:justify-evenly h-[500px] md:h-[250px] sm:!h-[500px]  md:w-full sm:!flex-col">
           <Card title="Total Sales" content={metrics.total_sales} />
           <Card title="Total Orders" content={metrics.orders} />
         </div>
 
-        <div className="h-[500px] w-[75%]  flex flex-col justify-center  items-center bg-primary  rounded-md">
-          <h2 className="text-light font-semibold text-xl uppercase mt-8">
+        <div className="h-[500px] w-[75%] md:w-full  flex flex-col justify-center  items-center bg-primary  rounded-md ml-5 md:ml-0">
+          <h2 className="text-light font-semibold text-xl sm:text-sm uppercase sm:capitalize mt-8">
             Bar Chart of sales of Last 7 days
           </h2>
           <BarChart data={weeklyData} />

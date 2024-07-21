@@ -26,33 +26,34 @@ const Header = ({ username, isMobile }) => {
   };
 
   return (
-    // <nav className="flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 border-light">
-    //   <div className="text-light font-bold text-xl">ARGON</div>
-    //   <div className="text-light flex flex-row h-full items-center">
-    //     <div className="ml-8 h-full flex items-center">
-    //       Welcome
-    //       <span className="font-bold ml-2 border-r-2 pr-8 h-[50%] flex items-center">
-    //         {username}
-    //       </span>
-    //     </div>
-    //     <div className="ml-8">DASHBOARD</div>
-    //     <div className="ml-8">PIE CHART</div>
-    //     <div className="ml-8">Mode</div>
-    //   </div>
-    // </nav>
-
-    // FOR MOBILE
-    <nav className="flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 border-light">
-      <div className="text-light font-bold text-xl">ARGON</div>
-      <div className="text-light flex flex-row h-full items-center">
-        {isNavOpen ? (
-          <CloseIcon onClick={toggleMenu} />
-        ) : (
-          <MenuIcon onClick={toggleMenu} />
-        )}
-        {isNavOpen && <NavMenu username={username} />}
-      </div>
-    </nav>
+    <>
+      <nav className="flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 border-light md:hidden">
+        <div className="text-light font-bold text-xl">ARGON</div>
+        <div className="text-light flex flex-row h-full items-center">
+          <div className="ml-8 h-full flex items-center">
+            Welcome
+            <span className="font-bold ml-2 border-r-2 pr-8 h-[50%] flex items-center">
+              {username}
+            </span>
+          </div>
+          <div className="ml-8">DASHBOARD</div>
+          <div className="ml-8">PIE CHART</div>
+          <div className="ml-8">Mode</div>
+        </div>
+      </nav>
+      {/* // FOR MOBILE */}
+      <nav className="md:flex flex-row justify-between items-center mx-12 h-[80px] border-b-2 border-light hidden ">
+        <div className="text-light font-bold text-xl">ARGON</div>
+        <div className="text-light flex flex-row h-full items-center">
+          {isNavOpen ? (
+            <CloseIcon onClick={toggleMenu} />
+          ) : (
+            <MenuIcon onClick={toggleMenu} />
+          )}
+          {isNavOpen && <NavMenu username={username} />}
+        </div>
+      </nav>
+    </>
   );
 };
 
